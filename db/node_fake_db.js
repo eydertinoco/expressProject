@@ -38,9 +38,8 @@ module.exports.save = function save(entity) {
 }
 
 module.exports.findById = function findById(id) {
-
   return list.find((book) => {
-    return book.id === id
+    return book.id === Number(id)
   })
 }
 
@@ -53,7 +52,7 @@ module.exports.count = function count() {
 }
 
 module.exports.del = function del(id) {
-  let x = findById(id)
+  let x = exports.findById(id)
   list.splice(list.indexOf(x), 1)
 }
 
