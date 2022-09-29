@@ -7,25 +7,25 @@ https://expressproject01.herokuapp.com/
 
 ### GET /books
 ```bash
-curl 'http://localhost:3000/books'
+curl 'https://expressproject01.herokuapp.com/books'
 ```
 
 ### GET /books/:id
 ```bash
-curl 'http://localhost:3000/books/1'
+curl 'https://expressproject01.herokuapp.com/books/1'
 ```
 
 ### POST /books
 ```bash
-curl -X POST -d '{ id: 5, titulo: 'Título', autor: 'Autor', isbn: 00000, ano_lancamento: 2001 }' 'http://localhost:3000/books'
+curl -X POST -d '{ id: 5, titulo: 'Título', autor: 'Autor', isbn: 00000, ano_lancamento: 2001 }' 'https://expressproject01.herokuapp.com/books'
 ```
 
 ### PUT /books/:id
 ```bash
-curl -X PUT -d '{ titulo: 'Título', autor: 'Autor', isbn: 00000, ano_lancamento: 2001 }' 'http://localhost:3000/books/1'
+curl -X PUT -d '{ titulo: 'Título', autor: 'Autor', isbn: 00000, ano_lancamento: 2001 }' 'https://expressproject01.herokuapp.com/books/1'
 ```
 
 ### DELETE /books/:id
 ```bash
-curl -X DELETE 'http://localhost:3000/books/1'
+curl -X DELETE 'https://expressproject01.herokuapp.com/books/1'
 ```
