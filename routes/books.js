@@ -1,6 +1,18 @@
 var express = require('express');
+const { default: mongoose } = require('mongoose');
 var router = express.Router();
-var db = require('../db/node_fake_db');
+// var db = require('../db/node_fake_db');
+var db = require('../db/dbConnect');
+
+const livroSchema = new mongoose.Schema({
+  id: {type: String},
+  titulo: {type: String, required: true},
+  autor: {type: String, required: true},
+  isbn: {type: String, required: true},
+  resumo: {type: String, required: true},
+  ano_lancamento: {type: String, required: true},
+})
+
 
 router.route('/')
   .get((req, res) => {

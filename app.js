@@ -7,6 +7,8 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var booksRouter = require('./routes/books');
+const { default: db } = require('./db/dbConnect');
+const { allowedNodeEnvironmentFlags } = require('process');
 
 var app = express();
 
@@ -39,5 +41,14 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+db.on("error", console.log.bind(console, 'Error de conexão'));
+db.once("open", () => {console.log('Conexão com o banco feito com sucesso')});
+
+app.on('open', () => {
+  app.listen(port, () => {
+    console.log(`Servidor escurando em http://localhost:${port}`)
+  })
+})
 
 module.exports = app;
