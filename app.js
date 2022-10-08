@@ -4,7 +4,6 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-// const port = Process.env.PORT || 3000
 const mongoose = require('mongoose');
 const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = encodeURIComponent(process.env.DB_PASSWORD);
@@ -50,12 +49,8 @@ app.use('/books', booksRouter);
 mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.bf6kvlp.mongodb.net/?retryWrites=true&w=majority`)
     .then(() => {
         console.log("Conectamos ao MongoDB");
-        app.set('port', process.env.PORT || 3000);
-        // app.listen(port,()=>{  // do not add localhost here if you are deploying it
-        //     console.log("server listening to port "+port);
-        // });
-        // app.listen(3000)
-        // console.log(`Servidor escurando em http://localhost:3000`)
+        app.listen(3000)
+        console.log(`Servidor escurando em http://localhost:3000`)
     })
     .catch((err) => console.log(err))
 
