@@ -1,16 +1,14 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+require('dotenv').config();
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const mongoose = require('mongoose');
+const DB_USER = process.env.DB_USER;
+const DB_PASSWORD = encodeURIComponent(process.env.DB_PASSWORD);
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var booksRouter = require('./routes/books');
-const { default: db } = require('./db/dbConnect');
-const { allowedNodeEnvironmentFlags } = require('process');
-
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,33 +20,44 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+const { allowedNodeEnvironmentFlags } = require('process');
+
+// Rotas da API
+const indexRouter = require('./routes/index');
 app.use('/', indexRouter);
+const usersRouter = require('./routes/users');
 app.use('/users', usersRouter);
+const booksRouter = require('./routes/books');
 app.use('/books', booksRouter);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+// // catch 404 and forward to error handler
+// app.use(function(req, res, next) {
+//   next(createError(404));
+// });
+//
+// // error handler
+// app.use(function(err, req, res, next) {
+//   // set locals, only providing error in development
+//   res.locals.message = err.message;
+//   res.locals.error = req.app.get('env') === 'development' ? err : {};
+//
+//   // render the error page
+//   res.status(err.status || 500);
+//   res.render('error');
+// });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.bf6kvlp.mongodb.net/?retryWrites=true&w=majority`)
+    .then(() => {
+        console.log("Conectamos ao MongoDB");
+        app.listen(process.env.PORT | 3000)
+        console.log(`Servidor escurando em http://localhost:3000`)
+    })
+    .catch((err) => console.log(err))
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-db.on("error", console.log.bind(console, 'Error de conexão'));
-db.once("open", () => {console.log('Conexão com o banco feito com sucesso')});
-
-app.on('open', () => {
-  app.listen(port, () => {
-    console.log(`Servidor escurando em http://localhost:${port}`)
-  })
-})
-
-module.exports = app;
+// app.on('open', () => {
+//   app.listen(port, () => {
+//     console.log(`Servidor escurando em http://localhost:${port}`)
+//   })
+// })
+//
+// module.exports = app;
