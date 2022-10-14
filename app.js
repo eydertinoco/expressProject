@@ -46,11 +46,14 @@ app.use('/books', booksRouter);
 //   res.render('error');
 // });
 
+const PORT = process.env.PORT | 3000;
+
 mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.bf6kvlp.mongodb.net/?retryWrites=true&w=majority`)
     .then(() => {
         console.log("Conectamos ao MongoDB");
-        app.listen(process.env.PORT | 3000)
-        console.log(`Servidor escurando em http://localhost:3000`)
+        app.listen(PORT, () => {
+            console.log(`Servidor escurando em http://localhost:${PORT}`)
+        })
     })
     .catch((err) => console.log(err))
 
