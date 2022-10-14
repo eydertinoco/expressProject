@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 
+const mongoose = require('mongoose');
 var app = require('../app');
 var debug = require('debug')('novo-projeto-em-express:server');
 var http = require('http');
@@ -24,6 +25,15 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
+
+mongoose.connect(`mongodb+srv://eyder:eyder@cluster0.bf6kvlp.mongodb.net/?retryWrites=true&w=majority`)
+    .then(() => {
+      console.log("Conexão com MongoDB bem sucedida");
+      app.listen(port, () => {
+        console.log(`Servidor no port: ${PORT}`)
+      })
+    })
+    .catch((err) => console.log(err))
 
 server.listen(port);
 server.on('error', onError);

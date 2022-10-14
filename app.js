@@ -19,9 +19,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Rotas
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var booksRouter = require('./routes/books');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/books', booksRouter);
 
 // Static Files
 
